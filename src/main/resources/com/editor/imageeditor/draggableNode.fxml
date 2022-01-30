@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<fx:root fx:id="globalBox" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #425aff88;" type="BorderPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox fx:id="topBox" alignment="TOP_RIGHT" minHeight="24.0" BorderPane.alignment="TOP_RIGHT">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="buttonExit" mnemonicParsing="false" style="-fx-background-color: #425af588;">
+               <graphic>
+                  <SVGPath content="M10.8252 8.8328L7.9788 5.988L10.8236 3.1432C11.3708 2.5976 11.3708 1.7096 10.8236 1.164C10.2764 0.613601 9.3916 0.615201 8.8444 1.1624L5.998 4.0072L3.1516 1.1592C2.6044 0.612001 1.718 0.615201 1.1708 1.1592C0.625197 1.7064 0.625197 2.5944 1.1708 3.14L4.0188 5.988L1.1772 8.828C0.629997 9.3752 0.629997 10.2632 1.1772 10.8072C1.4508 11.0824 1.8076 11.2184 2.166 11.2184C2.526 11.2184 2.8828 11.0824 3.1564 10.8088L5.998 7.9672L8.846 10.8136C9.1196 11.0872 9.4764 11.2232 9.8348 11.2232C10.1932 11.2232 10.5516 11.0856 10.8252 10.8136C11.3724 10.2664 11.3724 9.38 10.8252 8.8328Z" stroke="BLACK" strokeWidth="0.0" />
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox fx:id="VBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #425af566;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="label" alignment="CENTER" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="image" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <TextField fx:id="input">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="buttonMain" mnemonicParsing="false" text="Update" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <left>
+      <VBox fx:id="leftBox" alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></VBox>
+   </left>
+   <right>
+      <VBox fx:id="rightBox" alignment="TOP_CENTER" BorderPane.alignment="CENTER" />
+   </right>
+</fx:root>

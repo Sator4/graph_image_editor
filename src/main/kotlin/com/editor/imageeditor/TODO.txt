@@ -1,0 +1,18 @@
+DONE:
+output i/m images - update on: 1) button 2) link drop 3) link create
+output finale image
+effects - adding text
+delete links after deleting nodes
+
+bind link position to lcs - 28.01.22
+
+effects - grey - 29.01.22
+
+effects - brightness - 30.01.22
+effects - sepia
+effects - invert
+effects - blur
+
+add image
+TODO:
+transoformations - not scaling y coord
