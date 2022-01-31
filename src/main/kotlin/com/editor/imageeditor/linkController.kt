@@ -83,7 +83,7 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
             }
             effectsArea = linkParent.parent as AnchorPane
 //            println("lc-1")
-            templink.startX = this.localToScene(this.boundsInLocal).centerX - 100
+            templink.startX = this.localToScene(this.boundsInLocal).centerX - 120
             templink.startY = this.localToScene(this.boundsInLocal).centerY - 10
             effectsArea!!.children.add(templink)
 
@@ -137,9 +137,9 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
             val gt = dragEvent.gestureTarget as LinkController
             val gs = dragEvent.gestureSource as LinkController
 
-            link.startX = gs.localToScene(gs.boundsInLocal).centerX - 100
+            link.startX = gs.localToScene(gs.boundsInLocal).centerX - 120
             link.startY = gs.localToScene(gs.boundsInLocal).centerY - 10
-            link.endX = gt.localToScene(gt.boundsInLocal).centerX - 100
+            link.endX = gt.localToScene(gt.boundsInLocal).centerX - 120
             link.endY = gt.localToScene(gt.boundsInLocal).centerY - 10
             link.startXProperty().bind(Bindings.add(gs.linkParent.layoutXProperty(), link.startX - gs.linkParent.layoutX))
             link.startYProperty().bind(Bindings.add(gs.linkParent.layoutYProperty(), link.startY - gs.linkParent.layoutY))

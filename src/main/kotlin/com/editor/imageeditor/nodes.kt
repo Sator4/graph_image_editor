@@ -84,10 +84,12 @@ open class DraggableNode : BorderPane() {
 
     var nextNode: DraggableNode? = null
     val updated_info = Passinfo()
+    var path_to_image: File? = null
 
 
     @FXML
     fun initialize() {
+//        println(nodes)
         id = UUID.randomUUID().toString()
         nodes.add(this)
         buttonExit.onAction = EventHandler { delete_this_node() }
@@ -193,6 +195,7 @@ class OutputNode : DraggableNode() {
     }
 
     override fun update(new_info: Passinfo) {
+        updated_info.image = new_info.image
         if (new_info.image == null){
             global_output!!.image = null
         }
@@ -223,12 +226,12 @@ class ImageSourceNode : DraggableNode() {
             val fileChooser = FileChooser()
             val imageFilter = FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.bmp")
             fileChooser.extensionFilters.add(imageFilter)
-            val file: File? = fileChooser.showOpenDialog(Stage())
-            if (file == null){
+            path_to_image = fileChooser.showOpenDialog(Stage())
+            if (path_to_image == null){
                 this.image.image = null
             }
             else {
-                val preview = Image(file.toString())
+                val preview = Image(path_to_image.toString())
                 this.image.image = preview
             }
             updated_info.image = this.image.image
@@ -729,7 +732,7 @@ class TransformScaleNode : DraggableNode() {
             }
             else {
                 try {
-                    scale_x = 1 / (updated_info.float!!.toDouble().absoluteValue)
+                    scale_x = updated_info.float!!.toDouble().absoluteValue
                     println(scale_x)
                 } catch (e: Exception){
                     scale_x = 1.0
@@ -742,7 +745,7 @@ class TransformScaleNode : DraggableNode() {
             }
             else {
                 try {
-                    scale_y = 1 / (updated_info.float!!.toDouble().absoluteValue)
+                    scale_y = updated_info.float!!.toDouble().absoluteValue
                     println(scale_y)
                 } catch (e: Exception){
                     scale_y = 1.0

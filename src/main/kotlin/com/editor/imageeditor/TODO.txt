@@ -14,5 +14,6 @@ effects - invert
 effects - blur
 
 add image
+
 TODO:
-transoformations - not scaling y coord
+decerialization
