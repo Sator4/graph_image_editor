@@ -35,6 +35,11 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
     var type = imgType
     var linked = false
     var axis = ' '
+    var serial_number = 0
+    var lbx: Double = 0.0
+    var lby: Double = 0.0
+    var lex: Double = 0.0
+    var ley: Double = 0.0
 
 
 
@@ -57,6 +62,8 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
                             axis = 'I'
                         }
                         effectsArea!!.children.remove(connection.third)
+                        println(connection.first.id)
+                        println(connection.second.id)
                         connection.first.linked = false
                         connection.first.link = Line()
                         connection.second.linked = false
@@ -110,6 +117,7 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
         }
 
         linkEnd.onDragOver = EventHandler { dragEvent ->
+//            println(id)
 //            println(linked)
             if (!outputEnd && dragEvent.dragboard.getContent(parentId) != linkParent.id &&
                 !linked &&
@@ -120,57 +128,8 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
             dragEvent.consume()
         }
         linkEnd.onDragDropped = EventHandler { dragEvent ->
-            if (effectsArea == null){
-                effectsArea = linkParent.parent as AnchorPane
-            }
-//            println("lc-dr")
+            on_drag_dropped(dragEvent.gestureSource as LinkController, dragEvent.gestureTarget as LinkController, true)
 
-            ((dragEvent.gestureSource as LinkController).parent.parent as DraggableNode).nextNode =
-                (dragEvent.gestureTarget as LinkController).parent.parent as DraggableNode
-//            println("lc-dr-1")
-
-
-
-//            node_link!!.startXProperty().bind(Bindings.add(source1.layoutXProperty(), source1.width/2.0))
-//            node_link!!.startYProperty().bind(Bindings.add(source1.layoutYProperty(), source1.height/2.0))
-
-            val gt = dragEvent.gestureTarget as LinkController
-            val gs = dragEvent.gestureSource as LinkController
-
-            link.startX = gs.localToScene(gs.boundsInLocal).centerX - 120
-            link.startY = gs.localToScene(gs.boundsInLocal).centerY - 10
-            link.endX = gt.localToScene(gt.boundsInLocal).centerX - 120
-            link.endY = gt.localToScene(gt.boundsInLocal).centerY - 10
-            link.startXProperty().bind(Bindings.add(gs.linkParent.layoutXProperty(), link.startX - gs.linkParent.layoutX))
-            link.startYProperty().bind(Bindings.add(gs.linkParent.layoutYProperty(), link.startY - gs.linkParent.layoutY))
-            link.endXProperty().bind(Bindings.add(gt.linkParent.layoutXProperty(), link.endX - gt.linkParent.layoutX))
-            link.endYProperty().bind(Bindings.add(gt.linkParent.layoutYProperty(), link.endY - gt.linkParent.layoutY))
-//            println(this.linkParent)
-            effectsArea!!.children.add(link)
-            connections.add(Triple(this, dragEvent.gestureSource as LinkController, link))
-            this.linked = true
-            (dragEvent.gestureSource as LinkController).linked = true
-
-            if (this.linkEndLabel.text == "X"){
-                axis = 'X'
-            } else if (this.linkEndLabel.text == "Y"){
-                axis = 'Y'
-            } else if (this.linkEndLabel.text == "Img2"){
-                axis = 'I'
-            }
-            else {
-                axis = ' '
-            }
-            if (axis != ' ') {
-                if (type == intType || type == floatType) {
-                    linkParent.get_number((gs.parent.parent as DraggableNode).updated_info, axis)
-                } else if (type == imgType){
-                    linkParent.get_another_image((gs.parent.parent as DraggableNode).updated_info)
-                }
-            }
-            else {
-                linkParent.update((gs.parent.parent as DraggableNode).updated_info)
-            }
 //            for (i in connections) println(i)
             dragEvent.consume()
             println("lc-dr-f")
@@ -182,6 +141,77 @@ class LinkController(val linkParent: DraggableNode) : VBox() {
             dragEvent.consume()
             println("lc-f")
             println()
+        }
+    }
+
+    fun on_drag_dropped(link_begin: LinkController, link_end: LinkController, from_event: Boolean){
+        if (effectsArea == null){
+            effectsArea = linkParent.parent as AnchorPane
+        }
+//            println("lc-dr")
+
+        (link_begin.parent.parent as DraggableNode).nextNode = link_end.parent.parent as DraggableNode
+//            println("lc-dr-1")
+
+
+
+//            node_link!!.startXProperty().bind(Bindings.add(source1.layoutXProperty(), source1.width/2.0))
+//            node_link!!.startYProperty().bind(Bindings.add(source1.layoutYProperty(), source1.height/2.0))
+
+        if (from_event) {
+            link.startX = link_begin.localToScene(link_begin.boundsInLocal).centerX - 120
+            link.startY = link_begin.localToScene(link_begin.boundsInLocal).centerY - 10
+            link.endX = link_end.localToScene(link_end.boundsInLocal).centerX - 120
+            link.endY = link_end.localToScene(link_end.boundsInLocal).centerY - 10
+            lbx = link.startX
+            lby = link.startY
+            lex = link.endX
+            ley = link.endY
+        }
+        else {
+            link = Line()
+            link.startX = lbx
+            link.startY = lby
+            link.endX = lex
+            link.endY = ley
+        }
+        link.startXProperty().bind(Bindings.add(
+            link_begin.linkParent.layoutXProperty(),
+            link.startX - link_begin.linkParent.layoutX))
+        link.startYProperty().bind(Bindings.add(
+            link_begin.linkParent.layoutYProperty(),
+            link.startY - link_begin.linkParent.layoutY))
+        link.endXProperty().bind(Bindings.add(
+            link_end.linkParent.layoutXProperty(),
+            link.endX - link_end.linkParent.layoutX))
+        link.endYProperty().bind(Bindings.add(
+            link_end.linkParent.layoutYProperty(),
+            link.endY - link_end.linkParent.layoutY))
+//            println(this.linkParent)
+        effectsArea!!.children.add(link)
+        connections.add(Triple(link_end, link_begin, link))
+        link_end.linked = true
+        link_begin.linked = true
+
+        if (link_end.linkEndLabel.text == "X"){
+            axis = 'X'
+        } else if (link_end.linkEndLabel.text == "Y"){
+            axis = 'Y'
+        } else if (link_end.linkEndLabel.text == "Img2"){
+            axis = 'I'
+        }
+        else {
+            axis = ' '
+        }
+        if (axis != ' ') {
+            if (type == intType || type == floatType) {
+                linkParent.get_number((link_begin.parent.parent as DraggableNode).updated_info, axis)
+            } else if (type == imgType){
+                linkParent.get_another_image((link_begin.parent.parent as DraggableNode).updated_info)
+            }
+        }
+        else {
+            linkParent.update((link_begin.parent.parent as DraggableNode).updated_info)
         }
     }
 

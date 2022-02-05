@@ -5,6 +5,7 @@ module com.editor.imageeditor {
     requires opencv;
     requires java.desktop;
     requires javafx.swing;
+    requires kotlinx.coroutines.core.jvm;
 
 
     opens com.editor.imageeditor to javafx.fxml;

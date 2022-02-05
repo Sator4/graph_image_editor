@@ -71,13 +71,13 @@ open class DraggableNode : BorderPane() {
     protected lateinit var input: TextField
 
     @FXML
-    protected lateinit var label: Label
+    lateinit var label: Label
 
     @FXML
-    protected lateinit var leftBox: VBox
+    lateinit var leftBox: VBox
 
     @FXML
-    protected lateinit var rightBox: VBox
+    lateinit var rightBox: VBox
 
     @FXML
     protected lateinit var topBox: HBox
@@ -165,6 +165,12 @@ open class DraggableNode : BorderPane() {
 //                println()
                 connections.remove(connections[i - offset])
                 offset += 1
+            }
+        }
+        for (node in nodes){
+            if (node.id == this.id){
+                nodes.remove(this)
+                break
             }
         }
         if (this.nextNode != null){
@@ -343,12 +349,15 @@ class AddStringNode : DraggableNode() {
         linkString.linkEndLabel.text = "Str"
         linkString.type = strType
         linkString.onDragDetected = null
+        linkString.serial_number = 1
         linkX.linkEndLabel.text = "X"
         linkX.type = intType
         linkX.onDragDetected = null
+        linkX.serial_number = 2
         linkY.linkEndLabel.text = "Y"
         linkY.type = intType
         linkY.onDragDetected = null
+        linkY.serial_number = 3
         linkOut.outputEnd = true
         this.leftBox.children.addAll(linkImage, linkString, linkX, linkY)
         this.rightBox.children.add(linkOut)
@@ -454,6 +463,7 @@ class FilterBrightnessNode : DraggableNode() {
         linkInFloat.onDragDetected = null
         linkInFloat.linkEndLabel.text = "Float"
         linkInFloat.type = floatType
+        linkInFloat.serial_number = 1
 
         this.leftBox.children.add(linkInImage)
         this.leftBox.children.add(linkInFloat)
@@ -584,6 +594,7 @@ class FilterBlurNode : DraggableNode() {
         linkInInt.type = intType
         linkInInt.linkEndLabel.text = "Int"
         linkInInt.onDragDetected = null
+        linkInInt.serial_number = 1
         linkOut.outputEnd = true
 
         this.leftBox.children.add(linkInImage)
@@ -637,9 +648,11 @@ class TransformMoveNode : DraggableNode() {
         linkX.linkEndLabel.text = "X"
         linkX.type = floatType
         linkX.onDragDetected = null
+        linkX.serial_number = 1
         linkY.linkEndLabel.text = "Y"
         linkY.type = floatType
         linkY.onDragDetected = null
+        linkY.serial_number = 2
         linkOut.outputEnd = true
         this.leftBox.children.addAll(linkImage, linkX, linkY)
         this.rightBox.children.add(linkOut)
@@ -772,6 +785,7 @@ class TransformRotateNode : DraggableNode() {
         linkRad.linkEndLabel.text = "Rad"
         linkRad.type = floatType
         linkRad.onDragDetected = null
+        linkRad.serial_number = 1
         linkOut.outputEnd = true
         this.leftBox.children.addAll(linkImage, linkRad)
         this.rightBox.children.add(linkOut)
@@ -817,12 +831,15 @@ class AddImageNode : DraggableNode() {
         linkImage2.linkEndLabel.text = "Img2"
         linkImage2.type = imgType
         linkImage2.onDragDetected = null
+        linkImage2.serial_number = 1
         linkX.linkEndLabel.text = "X"
         linkX.type = intType
         linkX.onDragDetected = null
+        linkX.serial_number = 2
         linkY.linkEndLabel.text = "Y"
         linkY.type = intType
         linkY.onDragDetected = null
+        linkY.serial_number = 3
         linkOut.outputEnd = true
         this.leftBox.children.addAll(linkImage, linkImage2, linkX, linkY)
         this.rightBox.children.add(linkOut)
